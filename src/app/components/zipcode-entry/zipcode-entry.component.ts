@@ -9,9 +9,12 @@ export class ZipcodeEntryComponent {
 
   private locationFacade = inject(LocationFacade);
 
+  @ViewChild('zipcode', { static: false }) invoice: ElementRef;
+
   // Just dispatch the action
   addLocation(zipcode: string) {
     this.locationFacade.addLocation(zipcode);
+    this.invoice.nativeElement.value = '';
   }
 
 }
