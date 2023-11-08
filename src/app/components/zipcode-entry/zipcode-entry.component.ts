@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { LocationFacade } from '../../+state/facades/location.facade';
 
 @Component({

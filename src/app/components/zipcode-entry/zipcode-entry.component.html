@@ -1,7 +1,7 @@
 <div class="row mb-3">
     <div class="col">
         <h2>Enter a zipcode:</h2>
-        <form class="d-flex" (submit)="addLocation(zipcode.value)">
+        <form class="d-flex">
             <input #zipcode class="form-control flex-grow-1" placeholder="Zipcode" type="text">
             <button (click)="addLocation(zipcode.value)" class="btn btn-primary text-nowrap ml-1">
                 Add location
