@@ -1,12 +1,15 @@
-import {ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot} from '@angular/router';
-import {Observable, of} from 'rxjs';
-import {WeatherService} from '../services/weather.service';
-import {inject} from '@angular/core';
-import {Forecast} from '../components/forecasts-list/forecast.type';
-import {take} from 'rxjs/operators';
+import { inject } from '@angular/core';
+import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { ForecastFacade } from '../+state/facades/forecast.facade';
 
-export const ForecastsResolver: ResolveFn<Forecast> =  (
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot,
-    weatherService: WeatherService = inject(WeatherService)
-): Observable<Forecast> => weatherService.getForecast(route.params['zipcode']).pipe(take(1));
+// We are using the resolver to dispatch the action
+// which will use effect to load data from cache or using service from the server
+export const ForecastsResolver: ResolveFn<null> = (
+  route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot,
+  forecastFacade: ForecastFacade = inject(ForecastFacade)
+): Observable<null> => {
+  forecastFacade.addForecast(route.params['zipcode']);
+  return of(null);
+}

@@ -1,23 +1,25 @@
 import { Inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { LocationActions } from '../actions/location.action';
-import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { WeatherService } from '../../services/weather.service';
+import { catchError, map, mergeMap } from 'rxjs/operators';
 import { ConditionsAndZip } from '../../interfaces/conditions-and-zip.type';
-import { isPast, newDateInXMinutes } from '../../utils/cache';
+import { WeatherService } from '../../services/weather.service';
+import { newDateInXMinutes } from '../../utils/cache';
 import { CACHE_DURATION } from '../../utils/cache.token';
+import { LocationActions } from '../actions/location.action';
+import { BaseEffect } from './base.effect';
 
 @Injectable()
-export class LocationEffect {
+export class LocationEffect extends BaseEffect {
 
-  cacheExpirationMap: Map<string, Date> = new Map()
-
+  /**
+   * Add condition to known locations
+   */
   public readonly addLocation$ = createEffect(() => {
       return this.actions$.pipe(
         ofType(LocationActions.addLocation),
         mergeMap(({zipcode: zip}) => {
-          if ( this.isNotCached(zip) ) {
+          if (this.isNotCached(zip)) {
             return this.weatherService.getCurrentCondition(zip).pipe(
               map((data) => {
                 this.cacheExpirationMap.set(zip, newDateInXMinutes(this.cacheDuration));
@@ -33,15 +35,23 @@ export class LocationEffect {
     }
   );
 
-  private isNotCached(zip) {
-    return !this.cacheExpirationMap.has(zip) || (this.cacheExpirationMap.has(zip) && isPast(this.cacheExpirationMap.get(zip)));
-  }
+  // Remove location from the cache
+  // then trigger another event to tell reducer to remove the location from state
+  public readonly removeLocation$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(LocationActions.removeLocation),
+      map(({zipcode}) => {
+        this.removeCacheKey(zipcode);
+        return LocationActions.removeLocationSuccess({zipcode})
+      })
+    );
+  })
 
   constructor(
-    private readonly actions$: Actions,
-    private readonly weatherService: WeatherService,
-    @Inject(CACHE_DURATION) private cacheDuration: number
+    protected readonly actions$: Actions,
+    protected readonly weatherService: WeatherService,
+    @Inject(CACHE_DURATION) protected cacheDuration: number
   ) {
-
+    super(actions$, weatherService, cacheDuration)
   }
 }

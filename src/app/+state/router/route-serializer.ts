@@ -18,7 +18,7 @@ export const mergeRouteParams = (
   const currentParams = getter(route);
   const primaryChild = route.children.find(c => c.outlet === 'primary') || route.firstChild;
 
-  return { ...currentParams, ...mergeRouteParams(primaryChild, getter) };
+  return {...currentParams, ...mergeRouteParams(primaryChild, getter)};
 };
 
 export const mergeRouteData = (route: ActivatedRouteSnapshot): Data => {
@@ -28,7 +28,7 @@ export const mergeRouteData = (route: ActivatedRouteSnapshot): Data => {
   const currentData = route.data;
 
   const primaryChild = route.children.find(c => c.outlet === 'primary') || route.firstChild;
-  return { ...currentData, ...mergeRouteData(primaryChild) };
+  return {...currentData, ...mergeRouteData(primaryChild)};
 };
 
 export class CustomRouterSerializer implements RouterStateSerializer<SerializedRouterState> {

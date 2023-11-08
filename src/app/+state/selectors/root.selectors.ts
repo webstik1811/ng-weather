@@ -1,4 +1,4 @@
-import { getRouterSelectors, RouterReducerState } from '@ngrx/router-store';
+import { getRouterSelectors } from '@ngrx/router-store';
 import { createSelector } from '@ngrx/store';
 import { getRouterState } from '../reducers/root.reducer';
 

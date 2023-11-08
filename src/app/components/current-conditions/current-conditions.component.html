@@ -1,21 +1,19 @@
-<div *ngIf="allLocations$ | async as allLocations">
-  <div *ngFor="let location of allLocations" class="well flex" (click)="showForecast($event, location.zip)">
-    <div>
-      <h3>{{location.data.name}} ({{location.zip}})</h3>
-      <h4>Current conditions: {{location.data.weather[0].main}}</h4>
-      <h4>Temperatures today:</h4>
-      <p>
-        Current {{location.data.main.temp | number:'.0-0'}}
-        - Max {{location.data.main.temp_max | number:'.0-0'}}
-        - Min {{location.data.main.temp_min | number:'.0-0'}}
-      </p>
-      <p>
-        <a href="javascript:void(0)"  (click)="showForecast($event, location.zip)" >Show 5-day forecast for {{location.data.name}}</a>
-      </p>
-    </div>
-    <div>
-      <span class="close" (click)="removeLocation(location.zip)">&times;</span>
-      <img [src]="getIcon(location.data.weather[0].id)">
-    </div>
- </div>
-</div>
+<mat-tab-group
+        *ngIf="allLocations$ | async as allLocations"
+        mat-align-tabs="start"
+        mat-stretch-tabs="false"
+        preserveContent>
+    <mat-tab *ngFor="let location of allLocations">
+        <ng-template mat-tab-label>
+            <div class="d-flex justify-content-between align-items-center">
+                <strong>{{location.data.name}} ({{location.zip}})</strong>
+                <span (click)="removeLocation(location.zip)" class="close-btn">&times;</span>
+            </div>
+        </ng-template>
+        <app-condition-tab
+                (showForecast)="showForecast($event)"
+                [icon]="getIcon(location.data.weather[0].id)"
+                [location]="location"
+        ></app-condition-tab>
+    </mat-tab>
+</mat-tab-group>

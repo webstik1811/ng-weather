@@ -1,0 +1,14 @@
+.close-btn {
+  cursor: pointer;
+  margin-left: 20px;
+}
+
+::ng-deep {
+  .mat-mdc-tab-body-wrapper {
+    border: 1px solid #00000020;
+  }
+
+  .mat-mdc-tab.mdc-tab {
+    border: 1px solid #00000020;
+  }
+}

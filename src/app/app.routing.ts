@@ -1,13 +1,13 @@
-// tslint:disable-next-line:import-spacing
-import { ModuleWithProviders }  from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import {ForecastsListComponent} from './components/forecasts-list/forecasts-list.component';
-import {MainPageComponent} from './containers/main-page/main-page.component';
-import {ForecastsResolver} from './resolvers/forecasts.resolver';
+import { ModuleWithProviders } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { ForecastsListComponent } from './components/forecasts-list/forecasts-list.component';
+import { MainPageComponent } from './containers/main-page/main-page.component';
+import { ForecastsResolver } from './resolvers/forecasts.resolver';
 
 const appRoutes: Routes = [
   {
-    path: '', component: MainPageComponent
+    path: '',
+    component: MainPageComponent
   },
   {
     path: 'forecast/:zipcode',

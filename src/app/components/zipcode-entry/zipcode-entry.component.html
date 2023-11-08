@@ -1,8 +1,11 @@
-<div class="well">
-  <h2>Enter a zipcode:</h2>
-  <input type="text" #zipcode placeholder="Zipcode" class="form-control">
-  <br>
-  <button class="btn btn-primary" (click)="addLocation(zipcode.value)" >
-    Add location
-  </button>
+<div class="row">
+    <div class="col">
+        <h2>Enter a zipcode:</h2>
+        <div class="d-flex">
+            <input #zipcode class="form-control flex-grow-1" placeholder="Zipcode" type="text">
+            <button (click)="addLocation(zipcode.value)" class="btn btn-primary text-nowrap ml-1">
+                Add location
+            </button>
+        </div>
+    </div>
 </div>

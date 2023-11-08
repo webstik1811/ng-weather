@@ -1,13 +1,12 @@
-import {Component, inject, Signal} from '@angular/core';
-import {WeatherService} from '../../services/weather.service';
-import {Router} from '@angular/router';
-import {ConditionsAndZip} from '../../interfaces/conditions-and-zip.type';
-import {LocationFacade} from '../../+state/facades/location.facade';
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { LocationFacade } from '../../+state/facades/location.facade';
+import { WeatherService } from '../../services/weather.service';
 
 @Component({
   selector: 'app-current-conditions',
   templateUrl: './current-conditions.component.html',
-  styleUrls: ['./current-conditions.component.css']
+  styleUrls: ['./current-conditions.component.scss']
 })
 export class CurrentConditionsComponent {
 
@@ -15,18 +14,21 @@ export class CurrentConditionsComponent {
   private weatherService = inject(WeatherService);
   private router = inject(Router);
 
+  // This will return all added to the store locations
+  // So you can subscribe to that observer from anywhere
   public readonly allLocations$ = this.locationFacade.allLocations$;
 
-  showForecast($event, zipcode: string) {
-    $event.stopPropagation();
-    $event.preventDefault()
+  // Navigate to route /forecast/:zipcode
+  showForecast(zipcode: string) {
     this.router.navigate(['/forecast', zipcode])
   }
 
+  // Get the link to the asset
   getIcon(id: number) {
     return this.weatherService.getWeatherIcon(id);
   }
 
+  // remove the location from store
   removeLocation(zipcode: string) {
     this.locationFacade.removeLocation(zipcode)
   }

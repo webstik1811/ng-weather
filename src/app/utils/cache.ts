@@ -1,3 +1,4 @@
+// Check if the provided data is in past or not
 export const isPast = (date?: Date): boolean => {
   return !!date && date.getTime() < Date.now();
 };

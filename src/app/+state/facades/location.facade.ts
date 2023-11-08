@@ -1,21 +1,23 @@
-import {inject, Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { LocationActions } from '../actions/location.action';
 import * as fromLocation from '../reducers/location.reducer';
-import {select, Store} from '@ngrx/store';
-import {LocationActions} from '../actions/location.action';
-import {LocationSelectors} from '../selectors/location.selector';
+import { LocationSelectors } from '../selectors/location.selector';
 
-@Injectable({ providedIn: 'root' })
+// The facade has an explicit public API that exposes
+@Injectable({providedIn: 'root'})
 export class LocationFacade {
 
-    public allLocations$ = this.store.pipe(select(LocationSelectors.selectLocationItems))
-    constructor(private readonly store: Store<fromLocation.State>) {
-    }
+  public allLocations$ = this.store.pipe(select(LocationSelectors.selectLocationItems))
 
-    addLocation(zipcode: string) {
-        this.store.dispatch(LocationActions.addLocation({ zipcode }))
-    }
+  constructor(private readonly store: Store<fromLocation.State>) {
+  }
 
-    removeLocation(zipcode: string) {
-        this.store.dispatch(LocationActions.removeLocation({ zipcode }))
-    }
+  addLocation(zipcode: string) {
+    this.store.dispatch(LocationActions.addLocation({zipcode}))
+  }
+
+  removeLocation(zipcode: string) {
+    this.store.dispatch(LocationActions.removeLocation({zipcode}))
+  }
 }
