@@ -5,7 +5,6 @@ import { catchError, map, mergeMap } from 'rxjs/operators';
 import { ForecastAndZip } from '../../interfaces/forecast-and-zip';
 import { WeatherService } from '../../services/weather.service';
 import { newDateInXMinutes } from '../../utils/cache';
-import { CACHE_DURATION } from '../../utils/cache.token';
 import { ForecastActions } from '../actions/forecast.action';
 import { LocationActions } from '../actions/location.action';
 import { BaseEffect } from './base.effect';
@@ -50,8 +49,8 @@ export class ForecastEffect extends BaseEffect {
   constructor(
     protected readonly actions$: Actions,
     protected readonly weatherService: WeatherService,
-    @Inject(CACHE_DURATION) protected cacheDuration: number
+    @Inject('CACHE_DURATION') protected cacheDuration: number
   ) {
-    super(actions$, weatherService, cacheDuration)
+    super()
   }
 }

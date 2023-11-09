@@ -21,7 +21,7 @@ import { ZipcodeEntryComponent } from './components/zipcode-entry/zipcode-entry.
 import { MainPageComponent } from './containers/main-page/main-page.component';
 import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
 import { WeatherService } from './services/weather.service';
-import { getCacheExpirationProvider } from './utils/cache.token';
+import { AppConfig } from './utils/app-config';
 
 @NgModule({
   declarations: [
@@ -51,7 +51,11 @@ import { getCacheExpirationProvider } from './utils/cache.token';
     MatButtonModule,
   ],
   providers: [
-    getCacheExpirationProvider(1),
+    {
+      provide: 'CACHE_DURATION',
+      useFactory: (config: AppConfig) => config.cache_duration,
+      deps: [AppConfig]
+    },
     WeatherService,
     {
       provide: HTTP_INTERCEPTORS,
