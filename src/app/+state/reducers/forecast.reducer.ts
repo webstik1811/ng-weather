@@ -36,7 +36,10 @@ export interface State extends fromRoot.State {
 // Creates a reducer function to handle state transitions.
 export const reducer = createReducer(
   initialState,
-  on(ForecastActions.addForecastSuccess, (state, {forecast}) => adapter.addOne(forecast, state)),
+  on(ForecastActions.addForecastSuccess, (state, {forecast}) => {
+    const itemUpdate = state.entities[forecast.zip];
+    return itemUpdate ? adapter.updateOne({ id: forecast.zip, changes: forecast }, state) : adapter.addOne(forecast, state)
+  }),
   on(ForecastActions.removeForecast, (state, {zipcode}) => adapter.removeOne(zipcode, state)),
 );
 

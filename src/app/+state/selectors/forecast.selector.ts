@@ -15,10 +15,10 @@ const selectForecastItems = createSelector(
 
 const selectForecast = (zipcode: string) => createSelector(
   selectForecastEntities,
-  items => items[zipcode]?.data
+  items => items[zipcode]
 )
 
-
 export const ForecastSelectors = {
+  selectForecastItems,
   selectForecast
 }

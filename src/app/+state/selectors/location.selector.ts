@@ -7,6 +7,12 @@ const selectLocationEntities = createSelector(selectFeature, state => state.enti
 
 const selectLocationItems = createSelector(selectLocationEntities, state => Object.values(state).map(item => item))
 
+const selectLocation = (zipcode: string) => createSelector(
+  selectLocationEntities,
+  items => items[zipcode]
+)
+
 export const LocationSelectors = {
-  selectLocationItems
+  selectLocationItems,
+  selectLocation
 }

@@ -35,7 +35,10 @@ export interface State extends fromRoot.State {
 // Creates a reducer function to handle state transitions.
 export const reducer = createReducer(
   initialState,
-  on(LocationActions.addLocationSuccess, (state: LocationsState, {condition}) => adapter.addOne(condition, state)),
+  on(LocationActions.addLocationSuccess, (state: LocationsState, {condition}) => {
+    const itemUpdate = state.entities[condition.zip];
+    return itemUpdate ? adapter.updateOne({ id: condition.zip, changes: condition }, state) : adapter.addOne(condition, state)
+  }),
   on(LocationActions.removeLocation, (state: LocationsState, {zipcode}) => adapter.removeOne(zipcode, state)),
 );
 

@@ -1,9 +1,6 @@
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatTabsModule } from '@angular/material/tabs';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
@@ -21,6 +18,7 @@ import { ZipcodeEntryComponent } from './components/zipcode-entry/zipcode-entry.
 import { MainPageComponent } from './containers/main-page/main-page.component';
 import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
 import { WeatherService } from './services/weather.service';
+import { TabsModule } from './shared/tabs/tabs.module';
 import { AppConfig } from './utils/app-config';
 
 @NgModule({
@@ -30,7 +28,7 @@ import { AppConfig } from './utils/app-config';
     ForecastsListComponent,
     CurrentConditionsComponent,
     MainPageComponent,
-    ConditionTabComponent
+    ConditionTabComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,24 +42,23 @@ import { AppConfig } from './utils/app-config';
       {
         enabled: environment.production
       }),
-    MatTabsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    MatInputModule,
-    MatButtonModule,
+    TabsModule,
   ],
   providers: [
     {
       provide: 'CACHE_DURATION',
+      // The parameter is in MINUTES, so if you want to set 10 seconds
+      // you will need to convert them 10/60 = 0.1667
       useFactory: (config: AppConfig) => config.cache_duration,
       deps: [AppConfig]
     },
-    WeatherService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,
       multi: true,
-    },
+    }
   ],
   bootstrap: [AppComponent]
 })

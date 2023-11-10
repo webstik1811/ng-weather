@@ -5,6 +5,7 @@
   },
   "version": 1,
   "newProjectRoot": "projects",
+
   "projects": {
     "ng-weather": {
       "root": "",
@@ -110,6 +111,5 @@
         }
       }
     }
-  },
-  "defaultProject":"ng-weather"
+  }
 }

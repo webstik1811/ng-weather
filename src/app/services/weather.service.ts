@@ -4,7 +4,9 @@ import { Observable } from 'rxjs';
 import { CurrentConditions } from '../interfaces/current-conditions.type';
 import { Forecast } from '../interfaces/forecast.type';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class WeatherService {
 
   static URL = 'https://api.openweathermap.org/data/2.5';

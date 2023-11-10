@@ -1,0 +1,33 @@
+.tabs-header {
+  margin-bottom: -1px;
+  display: flex;
+  flex-grow: 1;
+  overflow: hidden;
+
+  .tabs-label-wrapper {
+    position: relative;
+    overflow: auto;
+    white-space: nowrap;
+  }
+  .tab-label {
+    flex-grow: 1;
+    border-width: 1px;
+    border-color: #00000020;
+    border-style: solid;
+    padding: 15px 25px;
+    cursor: pointer;
+
+
+    &.active {
+      color: red;
+      border-color: #00000080;
+      border-bottom-color: #ffffff;
+    }
+  }
+}
+.tabs-body {
+  border: 1px solid #00000080;
+}
+
+
+

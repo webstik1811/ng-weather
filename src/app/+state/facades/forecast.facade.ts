@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { switchMap } from 'rxjs/operators';
+import { filter, map, switchMap } from 'rxjs/operators';
 import { ForecastActions } from '../actions/forecast.action';
 import * as fromForecast from '../reducers/forecast.reducer';
 import { ForecastSelectors } from '../selectors/forecast.selector';
@@ -31,6 +31,12 @@ export class ForecastFacade {
   }
 
   selectForecastByZip(zipcode: string) {
+    return this.store.pipe(
+      select(ForecastSelectors.selectForecast(zipcode))
+    );
+  }
+
+  selectForecastItemByZip(zipcode: string) {
     return this.store.pipe(select(ForecastSelectors.selectForecast(zipcode)));
   }
 }

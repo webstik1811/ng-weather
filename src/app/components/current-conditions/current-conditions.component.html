@@ -1,19 +1,21 @@
-<mat-tab-group
-        *ngIf="allLocations$ | async as allLocations"
-        mat-align-tabs="start"
-        mat-stretch-tabs="false"
-        preserveContent>
-    <mat-tab *ngFor="let location of allLocations">
-        <ng-template mat-tab-label>
-            <div class="d-flex justify-content-between align-items-center">
-                <strong>{{location.data.name}} ({{location.zip}})</strong>
-                <span (click)="removeLocation(location.zip)" class="close-btn">&times;</span>
-            </div>
-        </ng-template>
-        <app-condition-tab
-                (showForecast)="showForecast($event)"
-                [icon]="getIcon(location.data.weather[0].id)"
-                [location]="location"
-        ></app-condition-tab>
-    </mat-tab>
-</mat-tab-group>
+<ng-container *ngIf="allLocations$ | async as allLocations">
+    <app-tab-group *ngIf="allLocations.length > 0"
+                   [selectedIndex]="tabIndex"
+                   (selectedIndexChange)="setCurrentIndex($event)">
+        <app-tab *ngFor="let location of allLocations">
+            <app-tab-label>
+                <div class="d-flex justify-content-between align-items-center">
+                    <strong>{{location.data.name}} ({{location.zip}})</strong>
+                    <span (click)="removeLocation($event, location.zip)" class="close-btn">&times;</span>
+                </div>
+            </app-tab-label>
+            <app-tab-body>
+                <app-condition-tab
+                        (showForecast)="showForecast($event)"
+                        [icon]="getIcon(location.data.weather[0].id)"
+                        [location]="location"
+                ></app-condition-tab>
+            </app-tab-body>
+        </app-tab>
+    </app-tab-group>
+</ng-container>
